@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     const spinButton = document.getElementById('spin-button');
     const namesInput = document.getElementById('names-input');
+    const winnerDialog = document.getElementById('winner-dialog');
+    const winnerNameElement = document.getElementById('winner-name');
+    const closeDialogButton = document.getElementById('close-dialog');
 
     let names = [];
     let startAngle = 0;
@@ -23,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners
     spinButton.addEventListener('click', spin);
     namesInput.addEventListener('input', updateNames);
+    closeDialogButton.addEventListener('click', () => {
+        winnerDialog.close();
+    });
 
     function updateNames() {
         const namesText = namesInput.value;
@@ -121,7 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const arcd = (arc * 180) / Math.PI;
         const index = Math.floor(((360 - (degrees % 360)) % 360) / arcd);
         const selectedName = names[index];
-        alert(`Selected Participant: ${selectedName}`);
+
+        // Display the winner in the dialog
+        winnerNameElement.textContent = `Selected Participant: ${selectedName}`;
+        winnerDialog.showModal();
     }
 
     function easeOut(t, b, c, d) {
