@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const angle = startAngle + index * arc;
             ctx.fillStyle = getColor(index, names.length);
 
+            // Draw segment
             ctx.beginPath();
             ctx.moveTo(canvas.width / 2, canvas.height / 2);
             ctx.arc(
@@ -78,11 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Draw pointer
+        drawPointer();
+    }
+
+    function drawPointer() {
         ctx.fillStyle = 'black';
         ctx.beginPath();
-        ctx.moveTo(canvas.width / 2 - 10, canvas.height / 2 - (canvas.height / 2) - 20);
-        ctx.lineTo(canvas.width / 2 + 10, canvas.height / 2 - (canvas.height / 2) - 20);
-        ctx.lineTo(canvas.width / 2, canvas.height / 2 - (canvas.height / 2) - 5);
+        ctx.moveTo(canvas.width / 2 - 15, canvas.height / 2 - (canvas.height / 2) - 10);
+        ctx.lineTo(canvas.width / 2 + 15, canvas.height / 2 - (canvas.height / 2) - 10);
+        ctx.lineTo(canvas.width / 2, canvas.height / 2 - (canvas.height / 2) + 20);
         ctx.closePath();
         ctx.fill();
     }
@@ -152,10 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // Data expired
                 localStorage.removeItem(storageKey);
+                namesInput.value = '';
+                updateNames();
             }
         } else {
-            // Initialize with sample names if no data is stored
-            namesInput.value = 'Alice\nBob\nCharlie\nDiana';
+            // Initialize with empty names
+            namesInput.value = '';
             updateNames();
         }
     }
