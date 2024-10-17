@@ -20,6 +20,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const storageKey = 'wheelOfNamesData';
     const expirationDays = 7;
 
+    // Array of congratulatory phrases
+    const phrases = [
+        "Congratulations, {name}! You are the winner!",
+        "Well done, {name}! You've been selected!",
+        "Hooray! {name}, you're up next!",
+        "Lucky you, {name}! It's your turn!",
+        "The wheel has spoken: {name}!",
+        "Get ready, {name}! It's time to shine!",
+        "Bravo, {name}! You've been chosen!",
+        "Cheers, {name}! The spotlight is yours!",
+        "Fantastic, {name}! You start the meeting!",
+        "{name}, fortune favors you today!"
+    ];
+
     // Load names from localStorage
     loadNamesFromStorage();
 
@@ -73,13 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add text labels
             ctx.save();
             ctx.translate(
-                canvas.width / 2 + Math.cos(angle + arc / 2) * (canvas.width / 2 - 50),
-                canvas.height / 2 + Math.sin(angle + arc / 2) * (canvas.height / 2 - 50)
+                canvas.width / 2 + Math.cos(angle + arc / 2) * (canvas.width / 2 - 70),
+                canvas.height / 2 + Math.sin(angle + arc / 2) * (canvas.height / 2 - 70)
             );
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
             ctx.textAlign = 'center';
-            ctx.fillStyle = 'white';
-            ctx.font = 'bold 15px Arial';
+            ctx.fillStyle = '#2c3e50'; // Darker text color for contrast
+            ctx.font = 'bold 20px "Segoe UI", Tahoma, Geneva, Verdana, sans-serif';
             ctx.fillText(name, 0, 0);
             ctx.restore();
         });
@@ -89,13 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawPointer() {
-        ctx.fillStyle = 'black';
+        // Draw pointer with distinct color and outline
+        ctx.fillStyle = '#ffffff'; // White color to stand out against the wheel
+        ctx.strokeStyle = '#000000'; // Black outline for contrast
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(canvas.width / 2 - 15, canvas.height / 2 - (canvas.height / 2) - 10);
         ctx.lineTo(canvas.width / 2 + 15, canvas.height / 2 - (canvas.height / 2) - 10);
         ctx.lineTo(canvas.width / 2, canvas.height / 2 - (canvas.height / 2) + 20);
         ctx.closePath();
         ctx.fill();
+        ctx.stroke();
     }
 
     function spin() {
@@ -128,8 +146,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const index = Math.floor(((360 - (degrees % 360)) % 360) / arcd);
         const selectedName = names[index];
 
+        // Select a random phrase
+        const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+        const message = randomPhrase.replace('{name}', selectedName);
+
         // Display the winner in the dialog
-        winnerNameElement.textContent = `Selected Participant: ${selectedName}`;
+        winnerNameElement.textContent = message;
         winnerDialog.showModal();
     }
 
@@ -141,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getColor(itemIndex, totalItems) {
         const hue = (itemIndex * 360) / totalItems;
-        return `hsl(${hue}, 100%, 50%)`;
+        return `hsl(${hue}, 70%, 60%)`; // Adjusted saturation and lightness for softer colors
     }
 
     function saveNamesToStorage() {

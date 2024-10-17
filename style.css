@@ -1,11 +1,16 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
+    background-color: #2c3e50; /* Darker background color */
+    color: #ecf0f1; /* Lighter text color for contrast */
+    margin: 0;
+    padding: 0;
 }
 
 #wheel-container {
     margin: 0 auto;
     position: relative;
+    padding-top: 20px;
 }
 
 #controls {
@@ -15,19 +20,35 @@ body {
 #names-input {
     width: 300px;
     height: 100px;
+    font-size: 18px; /* Increased font size */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font family */
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    background-color: #ecf0f1; /* Light background for contrast */
+    color: #2c3e50; /* Dark text color */
 }
 
 #spin-button {
     display: block;
-    margin: 10px auto;
-    padding: 10px 20px;
-    font-size: 16px;
+    margin: 20px auto;
+    padding: 12px 24px;
+    font-size: 18px; /* Increased font size */
     cursor: pointer;
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}
+
+#spin-button:hover {
+    background-color: #c0392b;
 }
 
 canvas {
-    border: 2px solid #333;
+    border: 2px solid #34495e;
     border-radius: 50%;
+    background-color: #ecf0f1; /* Light background for the wheel */
 }
 
 /* Winner Dialog Styles */
@@ -36,14 +57,16 @@ canvas {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
+    background-color: #34495e; /* Darker dialog background */
+    color: #ecf0f1; /* Light text color */
 }
 
 #winner-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
 }
 
 #winner-name {
-    font-size: 24px;
+    font-size: 26px; /* Increased font size */
     margin-bottom: 20px;
 }
 
@@ -51,4 +74,12 @@ canvas {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    background-color: #e67e22;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}
+
+#close-dialog:hover {
+    background-color: #d35400;
 }
