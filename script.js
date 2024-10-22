@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let spinAngleStart = 0;
     let spinTime = 0;
     let spinTimeTotal = 0;
+    let slowSpinInterval = null; // For slow rotation
 
     const storageKey = 'wheelOfNamesData';
     const expirationDays = 7;
@@ -44,12 +45,26 @@ document.addEventListener('DOMContentLoaded', () => {
         winnerDialog.close();
     });
 
+    function startSlowSpin() {
+        if (slowSpinInterval) {
+            clearInterval(slowSpinInterval);
+        }
+        slowSpinInterval = setInterval(() => {
+            startAngle += (0.5 / 3) * (Math.PI / 180); // Rotate by 0.1667 degree per frame
+            drawWheel();
+        }, 30); // Update every 30 milliseconds
+    }
+
     function updateNames() {
         const namesText = namesInput.value;
         names = namesText.split('\n').map(name => name.trim()).filter(name => name);
         arc = (Math.PI * 2) / names.length;
         drawWheel();
         saveNamesToStorage();
+        // Start slow spin if not already spinning
+        if (!spinTimeout && !slowSpinInterval) {
+            startSlowSpin();
+        }
     }
 
     function drawWheel() {
@@ -121,9 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please enter at least one name to spin the wheel.');
             return;
         }
+        // Stop the slow spin
+        if (slowSpinInterval) {
+            clearInterval(slowSpinInterval);
+            slowSpinInterval = null;
+        }
         spinAngleStart = Math.random() * 10 + 10;
         spinTime = 0;
-        spinTimeTotal = Math.random() * 3000 + 4000;
+        spinTimeTotal = Math.random() * 8000 + 10000; // Increased spin time
         rotateWheel();
     }
 
@@ -141,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function stopRotateWheel() {
         clearTimeout(spinTimeout);
+        spinTimeout = null;
         const degrees = (startAngle * 180) / Math.PI + 90;
         const arcd = (arc * 180) / Math.PI;
         const index = Math.floor(((360 - (degrees % 360)) % 360) / arcd);
@@ -153,6 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display the winner in the dialog
         winnerNameElement.textContent = message;
         winnerDialog.showModal();
+
+        // Restart the slow spin
+        startSlowSpin();
     }
 
     function easeOut(t, b, c, d) {
@@ -185,16 +209,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 namesInput.value = names.join('\n');
                 arc = (Math.PI * 2) / names.length;
                 drawWheel();
+                startSlowSpin(); // Start slow spin after loading names
             } else {
                 // Data expired
                 localStorage.removeItem(storageKey);
                 namesInput.value = '';
                 updateNames();
+                startSlowSpin(); // Start slow spin
             }
         } else {
             // Initialize with empty names
             namesInput.value = '';
             updateNames();
+            startSlowSpin(); // Start slow spin
         }
     }
 });
