@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Wheel of Names</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.ico">
 </head>
 <body>
     <h1>Wheel of Names</h1>
@@ -14,6 +14,18 @@
     <div id="controls">
         <textarea id="names-input" placeholder="Enter names, one per line"></textarea>
         <br>
+        <!-- Spin Duration Slider -->
+        <div class="slider-container">
+            <label for="spin-duration-slider">Spin Duration:</label>
+            <input type="range" id="spin-duration-slider" min="5000" max="30000" step="1000" value="16000">
+            <span id="spin-duration-value">16 s</span>
+        </div>
+        <!-- Spin Speed Slider -->
+        <div class="slider-container">
+            <label for="spin-speed-slider">Spin Speed:</label>
+            <input type="range" id="spin-speed-slider" min="0.1" max="5" step="0.1" value="1.0">
+            <span id="spin-speed-value">1.0</span>
+        </div>
         <button id="spin-button">Spin the Wheel</button>
     </div>
 

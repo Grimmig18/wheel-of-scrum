@@ -83,3 +83,26 @@ canvas {
 #close-dialog:hover {
     background-color: #d35400;
 }
+
+
+#sliders {
+    margin: 20px auto;
+    width: 300px;
+    text-align: left;
+    color: #ecf0f1;
+}
+
+#sliders label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+#sliders input[type="range"] {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#sliders span {
+    font-weight: bold;
+}
